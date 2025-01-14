@@ -1,10 +1,9 @@
 #!/bin/bash
 
-# evaluate_eu.sh
+# run-eval-eu.sh
 #
 # Example script for running "European multilingual" evaluations
 source .env
-
 source "${EVAL_ENV_DIR}/eval_common.sh"
 
 EURO_TASKS="hellaswagx,arcx,belebele,flores200,gsm8kx,truthfulqax"
@@ -13,11 +12,18 @@ venv_path="${WORKSPACE_DIR}/euro-eval-venv"
 workspace_subdir="euro-eval-harness"
 
 usage() {
-    echo "Usage: $0 <model_name> [--per-task]"
-    echo "Run European multilingual evaluation for a specific model."
-    echo "  --per-task   Run tasks one by one (monitors power usage per task)."
+    echo "Usage: $0 <model_name_or_list> [--per-task]"
+    echo "Run European multilingual evaluation for one or more models."
     echo
-    echo "Example: $0 model_name --per-task"
+    echo "  model_name_or_list   A single model name, or multiple names comma-separated."
+    echo "                       e.g. 'my_model' or 'my_model_1,my_model_2'"
+    echo "  --per-task           Run tasks one by one (monitors power usage per task)."
+    echo
+    echo "Examples:"
+    echo "  $0 my_model"
+    echo "  $0 my_model --per-task"
+    echo "  $0 my_model_1,my_model_2"
+    echo "  $0 my_model_1,my_model_2 --per-task"
 }
 
 # Main execution
@@ -26,31 +32,14 @@ if [ "$#" -lt 1 ]; then
     exit 1
 fi
 
-model_name="$1"
+model_list="$1"
 shift
 
-# Default: run them all at once
-run_method="run_eval"
-
-# If user passes "--per-task", we call run_eval_per_task instead
-if [ "$1" == "--per-task" ]; then
-    run_method="run_eval_per_task"
-fi
-
-if ! validate_model_name "$model_name"; then
-    exit 1
-fi
-
-echo "======================================"
-echo "Starting multilingual evaluation for: $model_name"
-echo "Tasks: $EURO_TASKS"
-echo "======================================"
-
-"${run_method}" \
-    "$model_name" \
+# Just call the new function in eval_common.sh
+run_evaluation_for_models \
+    "$model_list" \
     "$EURO_TASKS" \
     "$eval_type" \
     "$venv_path" \
-    "$workspace_subdir"
-
-echo "Evaluation completed. Results in ${RESULTS_DIR}/${model_name}."
+    "$workspace_subdir" \
+    "$@"

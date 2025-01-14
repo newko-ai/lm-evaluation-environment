@@ -235,3 +235,55 @@ EOF
     deactivate
     cd "$WORKSPACE_DIR"
 }
+
+run_evaluation_for_models() {
+    local model_list="$1"
+    shift
+    local tasks="$1"
+    shift
+    local eval_type="$1"
+    shift
+    local venv_path="$1"
+    shift
+    local workspace_subdir="$1"
+    shift
+
+    # Default: run them all at once
+    local run_method="run_eval"
+
+    # If user passes "--per-task", change run method
+    if [ "$1" == "--per-task" ]; then
+        run_method="run_eval_per_task"
+        shift
+    fi
+
+    # Split the model_list on commas into an array
+    IFS=',' read -ra models_array <<< "$model_list"
+
+    # Loop over each model
+    for model_name in "${models_array[@]}"; do
+        # Trim whitespace around model_name (just in case)
+        model_name="$(echo -e "${model_name}" | sed -e 's/^[[:space:]]*//;s/[[:space:]]*$//')"
+
+        if ! validate_model_name "$model_name"; then
+            echo "Skipping invalid model name or missing model dir: $model_name"
+            continue
+        fi
+
+        echo "======================================"
+        echo "Starting $eval_type evaluation for: $model_name"
+        echo "Tasks: $tasks"
+        echo "Method: $run_method"
+        echo "======================================"
+
+        "${run_method}" \
+            "$model_name" \
+            "$tasks" \
+            "$eval_type" \
+            "$venv_path" \
+            "$workspace_subdir"
+
+        echo "Evaluation completed for $model_name. Results in ${RESULTS_DIR}/${model_name}."
+        echo
+    done
+}
