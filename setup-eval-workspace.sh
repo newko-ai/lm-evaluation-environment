@@ -8,7 +8,7 @@ echo "Starting LLM evaluation environment setup..."
 # Install required packages
 echo "Installing required packages..."
 apt-get update
-apt-get install -y nano git python3-venv
+apt-get install -y nano git python3-venv python3-pip
 
 # Setup .env file if it doesn't exist
 if [ ! -f .env ]; then
