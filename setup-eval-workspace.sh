@@ -16,6 +16,7 @@ if [ ! -f .env ]; then
     cat > .env.example << EOL
 # Hugging Face token for model downloads
 HF_TOKEN=your_token_here
+HF_ALLOW_CODE=1
 
 # Base directory for model storage
 BASE_MODEL_DIR=./models

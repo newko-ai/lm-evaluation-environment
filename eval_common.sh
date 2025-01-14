@@ -143,7 +143,7 @@ EOF
     cd "${WORKSPACE_DIR}/${workspace_subdir}"
     python -m lm_eval \
         --model hf \
-        --model_args "pretrained=${model_dir}" \
+        --model_args "pretrained=${model_dir},trust_remote_code=True" \
         --tasks "$tasks" \
         --device "cuda:0" \
         --batch_size "auto:4" \
