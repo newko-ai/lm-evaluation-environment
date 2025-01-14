@@ -3,6 +3,8 @@
 # Exit on error
 set -e
 
+source .env
+
 if [ -z "$EVAL_ENV_DIR" ]; then
     echo "Error: EVAL_ENV_DIR environment variable is not set"
     exit 1
