@@ -42,7 +42,7 @@ This will download the following models:
 
 ## Evals to run
 - hellaswagx
-- arcx # needs y flag
+- arcx
 - belebele # broken
 - flores200
 - gsm8kx

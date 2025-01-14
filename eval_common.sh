@@ -130,6 +130,7 @@ EOF
     python -m lm_eval \
         --model hf \
         --model_args "pretrained=${model_dir},trust_remote_code=True" \
+        --trust_remote_code \
         --tasks "$tasks" \
         --device "cuda:0" \
         --batch_size "auto:4" \
@@ -219,6 +220,7 @@ EOF
         python -m lm_eval \
             --model hf \
             --model_args "pretrained=${model_dir},trust_remote_code=True" \
+            --trust_remote_code \
             --tasks "$task_name" \
             --device "cuda:0" \
             --batch_size "auto:4" \
