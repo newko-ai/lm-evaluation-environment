@@ -7,6 +7,7 @@
 WORKSPACE_DIR="$(pwd)"
 BASE_DIR="${WORKSPACE_DIR}/models"
 RESULTS_DIR="${WORKSPACE_DIR}/results"
+EVAL_SCRIPT_DIR="${WORKSPACE_DIR}/${EVAL_ENV_DIR}"
 
 # Create results directory structure
 create_results_structure() {
@@ -39,14 +40,12 @@ validate_model_name() {
 # Power monitoring functions
 start_power_monitoring() {
     local power_file=$1
-    local log_file=$2
 
     echo "Starting power monitoring"
     echo "Power metrics output: $power_file"
-    echo "Evaluation log: $log_file"
 
     # Start in background and store PID
-    nohup python monitor_power.py "$power_file" "$log_file" >/dev/null 2>&1 &
+    nohup python ${EVAL_SCRIPT_DIR}/monitor_power.py "$power_file" >/dev/null 2>&1 &
     local pid=$!
 
     # Verify process started
@@ -103,10 +102,6 @@ run_eval() {
     local log_file="${run_dir}/eval.log"
     local power_file="${run_dir}/power.json"
 
-    # Just create empty files if they don't exist
-    touch "$log_file"
-    touch "$power_file"
-
     cat > "${run_dir}/metadata.json" <<EOF
 {
     "model_name": "$model_name",
@@ -124,7 +119,7 @@ EOF
 
     trap cleanup EXIT INT TERM
 
-    if ! start_power_monitoring "$power_file" "$log_file"; then
+    if ! start_power_monitoring "$power_file"; then
         echo "Failed to start power monitoring"
         exit 1
     fi
@@ -134,7 +129,7 @@ EOF
 
     python -m lm_eval \
         --model hf \
-        --model_args "pretrained=${model_dir}" \
+        --model_args "pretrained=${model_dir},trust_remote_code=True" \
         --tasks "$tasks" \
         --device "cuda:0" \
         --batch_size "auto:4" \
@@ -204,10 +199,6 @@ run_eval_per_task() {
         local log_file="${run_dir}/eval.log"
         local power_file="${run_dir}/power.json"
 
-        # Just create empty files if they don't exist
-        touch "$log_file"
-        touch "$power_file"
-
         # Write metadata for the single task
         cat > "${run_dir}/metadata.json" <<EOF
 {
@@ -219,7 +210,7 @@ run_eval_per_task() {
 }
 EOF
 
-        if ! start_power_monitoring "$power_file" "$log_file"; then
+        if ! start_power_monitoring "$power_file"; then
             echo "Failed to start power monitoring for task $task_name."
             # up to you if you want to exit or continue
             continue
@@ -227,7 +218,7 @@ EOF
 
         python -m lm_eval \
             --model hf \
-            --model_args "pretrained=${model_dir}" \
+            --model_args "pretrained=${model_dir},trust_remote_code=True" \
             --tasks "$task_name" \
             --device "cuda:0" \
             --batch_size "auto:4" \

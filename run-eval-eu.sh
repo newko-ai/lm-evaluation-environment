@@ -7,7 +7,7 @@ source .env
 
 source "${EVAL_ENV_DIR}/eval_common.sh"
 
-EURO_TASKS="arc_easy,arc_challenge,gsm8k,hellaswag,mmlu,truthfulqa,flores200_src,flores200_tgt"
+EURO_TASKS="hellaswagx,arcx,belebele,flores200,gsm8kx,truthfulqax"
 eval_type="multilingual"
 venv_path="${WORKSPACE_DIR}/euro-eval-venv"
 workspace_subdir="euro-eval-harness"

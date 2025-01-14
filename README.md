@@ -7,7 +7,7 @@ Automated setup for your language model evaluation workspace. This tool helps do
 ## Quick Install
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/newko-ai/lm-evaluation-environment/refs/heads/main/setup-eval-workspace.sh | ([ "$(head -n1)" != "#!/bin/bash" ] && echo "Error: Invalid script" && exit 1 || bash)
+curl -sSL https://raw.githubusercontent.com/newko-ai/lm-evaluation-environment/refs/heads/main/setup-eval-workspace.sh | bash
 ```
 
 ## Manual Setup
@@ -35,7 +35,16 @@ This will download the following models:
 - BSC-LT/salamandra-7b-instruct
 
 ## Configuration
-
+```
 - `HF_TOKEN`: Your HuggingFace token with model download permissions
 - `BASE_MODEL_DIR`: Optional directory for model storage (defaults to ./models)
 ```
+
+## Evals to run
+- hellaswagx
+- arcx # needs y flag
+- belebele # broken
+- flores200
+- gsm8kx
+- truthfulqax
+- ogx_mmlux # not found
