@@ -5,7 +5,7 @@
 # Common utilities and configurations for evaluation scripts
 
 WORKSPACE_DIR="$(pwd)"
-BASE_DIR="${WORKSPACE_DIR}/models"
+BASE_DIR="${WORKSPACE_DIR}/${$BASE_MODEL_DIR}"
 RESULTS_DIR="${WORKSPACE_DIR}/results"
 
 # Create results directory structure

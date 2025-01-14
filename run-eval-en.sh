@@ -4,12 +4,12 @@
 #
 # Example script for running "standard English" evaluations
 
-source ./eval_common.sh
+source "${EVAL_ENV_DIR}/eval_common.sh"
 
 STANDARD_TASKS="arc_easy,arc_challenge,gsm8k,hellaswag,mmlu,truthfulqa"
 eval_type="english"
 venv_path="${WORKSPACE_DIR}/eval-venv"
-workspace_subdir="eval"
+workspace_subdir="eval-harness"
 
 usage() {
     echo "Usage: $0 <model_name>"

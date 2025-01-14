@@ -20,6 +20,7 @@ HF_ALLOW_CODE=1
 
 # Base directory for model storage
 BASE_MODEL_DIR=./models
+EVAL_ENV_DIR=./eval-environment
 
 # Optional: Proxy settings if needed
 # HTTP_PROXY=http://proxy.example.com:8080
@@ -65,7 +66,7 @@ python3 -m venv euro-eval-venv
 echo "Cloning repositories..."
 git clone https://github.com/EleutherAI/lm-evaluation-harness eval-harness
 git clone https://github.com/OpenGPTX/lm-evaluation-harness euro-eval-harness
-git clone https://github.com/newko-ai/lm-evaluation-environment eval-environment
+git clone https://github.com/newko-ai/lm-evaluation-environment "$EVAL_ENV_DIR"
 
 # Setup euro-eval environment
 echo "Setting up euro-eval environment..."

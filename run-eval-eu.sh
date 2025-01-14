@@ -4,12 +4,12 @@
 #
 # Example script for running "European multilingual" evaluations
 
-source ./eval_common.sh
+source "${EVAL_ENV_DIR}/eval_common.sh"
 
 EURO_TASKS="arc_easy,arc_challenge,gsm8k,hellaswag,mmlu,truthfulqa,flores200_src,flores200_tgt"
 eval_type="multilingual"
 venv_path="${WORKSPACE_DIR}/euro-eval-venv"
-workspace_subdir="euro-eval"
+workspace_subdir="euro-eval-harness"
 
 usage() {
     echo "Usage: $0 <model_name>"
