@@ -103,6 +103,10 @@ run_eval() {
     local log_file="${run_dir}/eval.log"
     local power_file="${run_dir}/power.json"
 
+    # Just create empty files if they don't exist
+    touch "$log_file"
+    touch "$power_file"
+
     cat > "${run_dir}/metadata.json" <<EOF
 {
     "model_name": "$model_name",
@@ -199,6 +203,10 @@ run_eval_per_task() {
         local output_file="${run_dir}/results"
         local log_file="${run_dir}/eval.log"
         local power_file="${run_dir}/power.json"
+
+        # Just create empty files if they don't exist
+        touch "$log_file"
+        touch "$power_file"
 
         # Write metadata for the single task
         cat > "${run_dir}/metadata.json" <<EOF
