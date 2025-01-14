@@ -88,10 +88,16 @@ deactivate
 echo "Making evaluation pipeline scripts executable..."
 chmod +x eval-environment/*.sh
 
+# Check and install huggingface-cli if not present
+if ! command -v huggingface-cli &> /dev/null; then
+    echo "Installing Hugging Face CLI..."
+    pip install --quiet huggingface_hub
+fi
+
 # Check if models directory is empty and run download script if needed
 if [ -z "$(ls -A "$BASE_MODEL_DIR")" ]; then
     echo "Models directory is empty, downloading models..."
-    ./eval-environment/download-models.sh
+    ./eval-environment/download_models.sh
 else
     echo "Models directory is not empty, skipping model download."
 fi
