@@ -3,6 +3,7 @@
 # evaluate_en.sh
 #
 # Example script for running "standard English" evaluations
+source .env
 
 source "${EVAL_ENV_DIR}/eval_common.sh"
 

@@ -3,6 +3,7 @@
 # evaluate_eu.sh
 #
 # Example script for running "European multilingual" evaluations
+source .env
 
 source "${EVAL_ENV_DIR}/eval_common.sh"
 
