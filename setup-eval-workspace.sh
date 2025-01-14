@@ -5,6 +5,11 @@ set -e
 
 echo "Starting LLM evaluation environment setup..."
 
+# Install required packages
+echo "Installing required packages..."
+apt-get update
+apt-get install -y nano git python3-venv
+
 # Setup .env file if it doesn't exist
 if [ ! -f .env ]; then
     echo "Creating example .env file..."
@@ -45,11 +50,6 @@ else
     fi
     echo ".env file exists and contains required variables."
 fi
-
-# Install required packages
-echo "Installing required packages..."
-sudo apt-get update
-sudo apt-get install -y nano git python3-venv
 
 # Create directories using BASE_MODEL_DIR
 echo "Creating model directory at: $BASE_MODEL_DIR"
