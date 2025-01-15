@@ -23,15 +23,16 @@ BASE_DIR=${BASE_MODEL_DIR:-"models"}
 
 # List of models to download
 declare -a models=(
-    "meta-llama/Llama-3.1-8B"
     "meta-llama/Llama-3.1-8B-Instruct"
-    "google/gemma-2-9b-it"
     "mistralai/Ministral-8B-Instruct-2410"
-    "utter-project/EuroLLM-9B-Instruct"
     "Qwen/Qwen2.5-7B-Instruct"
+    "seedboxai/merged_llama_sparse_dpo_experimental"
+    "utter-project/EuroLLM-9B-Instruct"
+    "google/gemma-2-9b-it"
     "openGPT-X/Teuken-7B-instruct-commercial-v0.4"
     "Aleph-Alpha/Pharia-1-LLM-7B-control"
     "BSC-LT/salamandra-7b-instruct"
+    "meta-llama/Llama-3.1-8B"
     # Add more models here in the same format
 )
 
